@@ -9,7 +9,8 @@ public class ArkanoidManager : MonoBehaviour
 {
     public GameObject brick;
     private Vector2 spawnPos;
-    private static int score;
+    private int score;
+    public static bool scoreIncrease;
     public Text scoreText;
     void Start()
     {
@@ -24,6 +25,8 @@ public class ArkanoidManager : MonoBehaviour
     private void Update()
     {
         scoreText.text = score.ToString();
+        if(scoreIncrease)
+            ScoreIncrease();
     }
 
     // Delegated this to a different function because I am probably working somewhat inconsistently
@@ -36,8 +39,10 @@ public class ArkanoidManager : MonoBehaviour
         }
     }
 
-    public static void ScoreIncrease()
+    void ScoreIncrease()
     {
+        scoreIncrease = false;
         score++;
+        scoreText.text = score.ToString();
     }
 }

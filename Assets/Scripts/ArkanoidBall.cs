@@ -20,8 +20,6 @@ public class ArkanoidBall : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             isActive = true;
-            print("bored");
-            
         }
         
         if (isActive)
@@ -30,15 +28,17 @@ public class ArkanoidBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Brick")
+        switch (other.gameObject.tag)
         {
-            speedY = -speedY;
-            Destroy(other.gameObject);
-        }
-
-        if (other.gameObject.tag == "Wall")
-        {
-            speedX = -speedX;
+            case "Brick":
+                speedY = -speedY;
+                break;
+            case "Wall":
+                speedX = -speedX;
+                break;
+            case "Paddle":
+                speedY = -speedY;
+                break;
         }
     }
 
@@ -47,13 +47,12 @@ public class ArkanoidBall : MonoBehaviour
         if (transform.position.y <= -5)
         {
             GameManager.LoadScene("Arkanoid");
-            print("You died");
         }
     }
 
     void Movement()
     {
             transform.Translate(speedX * Time.deltaTime, speedY * Time.deltaTime, 0);
-            DeathTrigger();
+            //DeathTrigger();
     }
 }

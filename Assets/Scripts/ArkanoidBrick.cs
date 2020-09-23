@@ -5,18 +5,12 @@ using UnityEngine;
 
 public class ArkanoidBrick : MonoBehaviour
 {
-    public GameObject arkanoidManager;
-
-    private void Start()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Ball")
+        if (other.gameObject.CompareTag("Ball"))
         {
-            ArkanoidManager.ScoreIncrease();
+            print("it hit");
+            ArkanoidManager.scoreIncrease = true;
             Destroy(this.gameObject);
         }
     }
