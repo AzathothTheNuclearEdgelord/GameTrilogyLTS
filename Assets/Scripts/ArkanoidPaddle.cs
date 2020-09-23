@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ArkanoidPaddle : MonoBehaviour
 {
-    private bool isActive = false;
     private float movement;
     public int speed;
 

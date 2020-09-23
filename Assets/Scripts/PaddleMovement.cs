@@ -13,7 +13,7 @@ public class PaddleMovement : MonoBehaviour
     {
         LocationLimitor();
         DirectionSelector();
-        transform.position = transform.position + new Vector3(0, movement, 0) * Time.deltaTime * speed;
+        transform.position += new Vector3(0, movement, 0) * (Time.deltaTime * speed);
     }
 
     void DirectionSelector()
