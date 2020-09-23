@@ -13,20 +13,9 @@ public class PongManager : MonoBehaviour
     public Text leftText;
     public static bool leftScoreIncrease;
     public static bool rightScoreIncrease;
-
-    public GameObject Ball;
-
-    private void Start()
-    {
-        Ball = GameObject.Find("BallBase");
-    }
-
+    
     private void Update()
     {
-        /*
-        print(leftScore);
-        print(rightScore);
-        */
         rightText.text = rightScore.ToString();
         leftText.text = leftScore.ToString();
 
