@@ -66,5 +66,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             rb.AddForce(new Vector2(1000, rb.velocity.y));
         }
+
+        if (other.CompareTag("Goodie"))
+        {
+            SidescrollerManager.scoreIncrease = true;
+            Destroy(other.gameObject);
+        }
     }
 }

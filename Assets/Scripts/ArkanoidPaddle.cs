@@ -10,7 +10,7 @@ public class ArkanoidPaddle : MonoBehaviour
 
     private void Update()
     {
-        movement = Input.GetAxis("Horizontal");
+        movement = Input.GetAxisRaw("Horizontal");
         //transform.position = transform.position + new Vector3(movement, transform.position.y, 0) * Time.deltaTime * speed;
         transform.position += new Vector3(movement, 0, 0) * (Time.deltaTime * speed);
         LocationLimiter();
