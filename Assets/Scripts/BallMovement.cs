@@ -8,6 +8,9 @@ public class BallMovement : MonoBehaviour
     private float speedX = 5;
     private float speedY = 5;
 
+    public AudioSource bounce;
+    public AudioSource death;
+
     void Update()
     {
         transform.Translate(speedX * Time.deltaTime, speedY * Time.deltaTime, 0);
@@ -22,8 +25,10 @@ public class BallMovement : MonoBehaviour
                 speedY = -speedY;
                 speedX *= 1.02f;
                 speedY *= 1.02f;
+                bounce.Play();
                 break;
             case "Paddle":
+                bounce.Play();
                 speedX = -speedX;
                 break;
         }
@@ -57,5 +62,7 @@ public class BallMovement : MonoBehaviour
             speedY = 5;
         
         transform.position = new Vector3(0, 0, 0);
+        
+        death.Play();
     }
 }

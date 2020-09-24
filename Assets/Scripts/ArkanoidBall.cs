@@ -9,6 +9,8 @@ public class ArkanoidBall : MonoBehaviour
     private float speedX = 3;
     private float speedY = 5;
     private bool isActive = false;
+    public AudioSource brickBounce;
+    public AudioSource wallBounce;
 
     private void Start()
     {
@@ -32,12 +34,19 @@ public class ArkanoidBall : MonoBehaviour
         {
             case "Brick":
                 speedY = -speedY;
+                brickBounce.Play();
                 break;
             case "Wall":
                 speedX = -speedX;
+                wallBounce.Play();
+                break;
+            case "Ceiling":
+                speedY = -speedY;
+                wallBounce.Play();
                 break;
             case "Paddle":
                 speedY = -speedY;
+                wallBounce.Play();
                 break;
         }
     }
@@ -53,6 +62,6 @@ public class ArkanoidBall : MonoBehaviour
     void Movement()
     {
             transform.Translate(speedX * Time.deltaTime, speedY * Time.deltaTime, 0);
-            //DeathTrigger();
+            DeathTrigger();
     }
 }

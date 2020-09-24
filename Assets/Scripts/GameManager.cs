@@ -20,10 +20,24 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Menu");
     }
 
-    public static void Die()
+    private static void Die()
     {
-        
         Application.Quit();
+    }
+
+    public void LoadPong()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadArkanoid()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void LoadSidescroller()
+    {
+        SceneManager.LoadScene(3);
     }
 
     public static void LoadScene(string scene)

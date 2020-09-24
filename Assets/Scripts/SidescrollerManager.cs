@@ -20,6 +20,6 @@ public class SidescrollerManager : MonoBehaviour
     {
         scoreIncrease = false;
         score++;
-        scoreText.text = score.ToString();
+        scoreText.text = "Score: " + score.ToString();
     }
 }

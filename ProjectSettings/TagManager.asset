@@ -12,6 +12,7 @@ TagManager:
   - Floor
   - Ramp
   - Goodie
+  - Ceiling
   layers:
   - Default
   - TransparentFX

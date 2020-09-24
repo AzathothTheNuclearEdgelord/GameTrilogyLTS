@@ -8,27 +8,27 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private Vector2 startPos;
+
+    private AudioSource audioData;
     
     private float xMovement;
     public float speed;
     private bool jump;
-    private bool outOfJumps;
-    private int jumps = 3;
+    private bool canJump;
+
+    public AudioSource goodiePickup;
     void Start()
     {
         startPos = transform.position;
         rb = gameObject.GetComponent<Rigidbody2D>();
         jump = false;
-        outOfJumps = false;
+        canJump = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (outOfJumps == false && Input.GetKeyDown(KeyCode.W))
+        if (canJump && Input.GetKeyDown(KeyCode.W))
             jump = true;
-        
-        print(outOfJumps);
         
         xMovement = Input.GetAxis("Horizontal");
 
@@ -43,21 +43,28 @@ public class PlayerBehaviour : MonoBehaviour
         // Physics
         if (jump == true )
         {
-           outOfJumps = true;
-           rb.AddForce(new Vector2(rb.velocity.x, 200));
+           rb.AddForce(new Vector2(rb.velocity.x, 400));
            jump = false;
         }
         
-        if(outOfJumps == false)
+        if(canJump == false)
+            rb.AddForce(new Vector2(xMovement, rb.velocity.y));
+        else
             rb.AddForce(new Vector2(xMovement*speed, rb.velocity.y));
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Floor"){
-            outOfJumps = false;
+        if (other.gameObject.CompareTag("Floor")){
+            canJump = true;
             print("Jump reset");
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Floor"))
+            canJump = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,6 +76,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (other.CompareTag("Goodie"))
         {
+            goodiePickup.Play();
             SidescrollerManager.scoreIncrease = true;
             Destroy(other.gameObject);
         }
