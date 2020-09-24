@@ -6,28 +6,36 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private float xMovement;
     private Vector2 movement;
+    private Vector2 startPos;
+    
+    private float xMovement;
     public float speed;
     private bool jump;
-    private bool jumped;
+    private bool outOfJumps;
+    private int jumps = 3;
     void Start()
     {
+        startPos = transform.position;
         rb = gameObject.GetComponent<Rigidbody2D>();
         jump = false;
-        jumped = false;
+        outOfJumps = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(jumped);
-        if (jumped == false && Input.GetAxis("Jump") > 0)
-        {
+        if (outOfJumps == false && Input.GetKeyDown(KeyCode.W))
             jump = true;
-        }
+        
+        print(outOfJumps);
         
         xMovement = Input.GetAxis("Horizontal");
+
+        if (transform.position.y <= -10)
+        {
+            transform.position = startPos;
+        }
     }
 
     private void FixedUpdate()
@@ -35,19 +43,28 @@ public class PlayerBehaviour : MonoBehaviour
         // Physics
         if (jump == true )
         {
-           jumped = true;
+           outOfJumps = true;
            rb.AddForce(new Vector2(rb.velocity.x, 200));
            jump = false;
         }
         
-        rb.AddForce(new Vector2(xMovement*10, rb.velocity.y));
+        if(outOfJumps == false)
+            rb.AddForce(new Vector2(xMovement*speed, rb.velocity.y));
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Floor"){
-            jumped = false;
+            outOfJumps = false;
             print("Jump reset");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ramp"))
+        {
+            rb.AddForce(new Vector2(1000, rb.velocity.y));
         }
     }
 }
